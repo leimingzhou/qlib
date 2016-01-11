@@ -32,7 +32,7 @@ else           %not along an axis, show the figure x axis label with step number
     end
 end
 
-if nargin>4
+if (nargin>4) && (nargout==2)
     Field=data(:, 4);
     switch char(component)
         case 'real'
