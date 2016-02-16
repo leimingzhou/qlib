@@ -31,7 +31,7 @@ classdef MediumData
                     epsilon_M = 1.458.^2;% Tongcang Li's thesis P180.
                     mu_M      = 1.0;
                 case 'silica_a'
-                    epsilon_M = (1.458+1e-8*1i).^2;% For absorbtion test.
+                    epsilon_M = (1.458+1.0e-3*1i).^2;% For absorbtion test.
                     mu_M      = 1.0;
                 case 'diamond'
                     epsilon_M = 2.418^2;% Tongcang Li's thesis P180.
