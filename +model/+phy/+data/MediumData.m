@@ -33,6 +33,9 @@ classdef MediumData
                 case 'silica_a'
                     epsilon_M = (1.458+1.0e-3*1i).^2;% For absorbtion test.
                     mu_M      = 1.0;
+                case 'silica_1000dBkm'
+                    epsilon_M = (1.458+1.95e-8*1i).^2;% For SiO2 with loss 1000dB/km.
+                    mu_M      = 1.0;
                 case 'diamond'
                     epsilon_M = 2.418^2;% Tongcang Li's thesis P180.
                     mu_M      = 1.0;
