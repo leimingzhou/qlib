@@ -35,6 +35,13 @@ b2 = D'*(  A * D*b +  B * D*a ); % In MATLAB operations on vectors are done firs
 pq = T * [ a2; b2 ];
 p = pq(1:length(pq)/2);
 q = pq(length(pq)/2+1:end);%It's noticed that [a2,b2,p,q] are incident-scatter beam formula at sphere center.
+%calculate the C_ext, C_sca, C_abs and Q_ext, Q_sca, Q_abs.(to add)
+%the absorbing coefficient.
+pwrsca = sum( abs(p).^2 + abs(q).^2 );
+pwrext =  -real(p'*a2+q'*b2);
+pwrabs = pwrext-pwrsca;
+absCoeff=pwrabs/pwr.^2
+
 cd = T2 * [ a2; b2 ];
 c = cd(1:length(cd)/2);
 d = cd(length(cd)/2+1:end);

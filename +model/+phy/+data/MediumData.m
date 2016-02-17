@@ -36,6 +36,15 @@ classdef MediumData
                 case 'silica_1000dBkm'
                     epsilon_M = (1.458+1.95e-8*1i).^2;% For SiO2 with loss 1000dB/km.
                     mu_M      = 1.0;
+                case 'silica_100dBkm'
+                    epsilon_M = (1.458+1.95e-9*1i).^2;% For SiO2 with loss 1000dB/km.
+                    mu_M      = 1.0;
+                case 'silica_10dBkm'
+                    epsilon_M = (1.458+1.95e-10*1i).^2;% For SiO2 with loss 1000dB/km.
+                    mu_M      = 1.0;
+                case 'silica_06dBkm'
+                    epsilon_M = (1.458+1.17e-11*1i).^2;% For SiO2 with loss 1000dB/km.
+                    mu_M      = 1.0;
                 case 'diamond'
                     epsilon_M = 2.418^2;% Tongcang Li's thesis P180.
                     mu_M      = 1.0;
