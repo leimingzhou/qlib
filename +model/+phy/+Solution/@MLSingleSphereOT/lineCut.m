@@ -27,23 +27,23 @@ function [data, fig]= lineCut(obj, r0, r1, n, component)
         end
     end
     
-    if nargin>4
+    if nargin>4 && nargout>1
     Ex=data(:, 4); Ey=data(:, 5); Ez=data(:, 6); Ea=conj(Ex).*Ex+conj(Ey).*Ey+conj(Ez).*Ez;
     switch char(component)
         case 'ExR'
-            fig=plot(x, real(Ex), 'r-');
+            fig=plot(x, real(Ex), 'r-o');
         case 'ExI'
-            fig=plot(x, imag(Ex), 'r-');
+            fig=plot(x, imag(Ex), 'r-o');
         case 'EyR'
-            fig=plot(x, real(Ey), 'r-');
+            fig=plot(x, real(Ey), 'r-o');
         case 'EyI'
-            fig=plot(x, imag(Ey), 'r-');
+            fig=plot(x, imag(Ey), 'r-o');
         case 'EzR'
-            fig=plot(x, real(Ez), 'r-');
+            fig=plot(x, real(Ez), 'r-o');
         case 'EzI'
-            fig=plot(x, imag(Ez), 'r-');
+            fig=plot(x, imag(Ez), 'r-o');
         case 'Ea'
-            fig=plot(x, Ea, 'r-');
+            fig=plot(x, Ea, 'r-o');
     end
     end
 

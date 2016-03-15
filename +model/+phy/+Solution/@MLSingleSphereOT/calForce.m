@@ -30,8 +30,11 @@ torque=torque./pwr^2;
 torque=full(torque);
 
 if nargin>2
-    force=focalPower*force;
-    torque=focalPower*torque;
+    c=constant('c');
+    n=total_beam.focBeamS.medium.n;
+    lambda=total_beam.focBeamS.wavelength;
+    force=n/c*focalPower*force*1e12;%pN unit
+    torque=n*lambda/c*focalPower*torque*1e18;%pN*um unit
 end
     
 end

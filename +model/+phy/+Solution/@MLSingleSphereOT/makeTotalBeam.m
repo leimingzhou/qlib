@@ -1,4 +1,4 @@
-function total_beam = makeTotalBeam ( obj, scatterer,focal_beam, Tab,Tcd,Tfg)
+function [total_beam,absCoeff] = makeTotalBeam ( obj, scatterer,focal_beam, Tab,Tcd,Tfg)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -40,7 +40,7 @@ q = pq(length(pq)/2+1:end);%It's noticed that [a2,b2,p,q] are incident-scatter b
 pwrsca = sum( abs(p).^2 + abs(q).^2 );
 pwrext =  -real(p'*a2+q'*b2);
 pwrabs = pwrext-pwrsca;
-absCoeff=pwrabs/pwr.^2
+absCoeff=pwrabs/pwr.^2;
 
 [M,~,N]=size(Tcd);M=M/2;
 cc=zeros(M,N);dd=zeros(M,N);ff=zeros(M,N);gg=zeros(M,N);
