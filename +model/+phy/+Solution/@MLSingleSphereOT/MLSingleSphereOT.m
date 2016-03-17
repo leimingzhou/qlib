@@ -35,7 +35,7 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
         
         function [force,torque]=perform(obj)
 %             import model.phy.PhysicalObject.Lens
-            
+                            obj.getNmax();
             lens          = obj.getLens();
             paraxial_beam = obj.getIncBeam();
             sphere        = obj.getScatterer();
