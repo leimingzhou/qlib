@@ -3,8 +3,7 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
     %   Detailed explanation goes here
     
     properties
-        forcefield;
-        torquefield;
+
     end
     
     methods
@@ -34,7 +33,7 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
             obj.parameters.CutOffNMax = p.get_parameter('CutOff', 'NMax');
         end
         
-        function [force,torque]=perform(obj,flag)
+        function [force,torque,forceQ, torqueQ]=perform(obj)
 %             import model.phy.PhysicalObject.Lens
                             obj.getNmax();
             lens          = obj.getLens();
@@ -44,18 +43,14 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
             focal_beam    = obj.makeFocalBeam(lens, paraxial_beam);            
             [Tab, Tcd, Tfg]       = obj.getTmatrix(sphere);
             
-            total_beam    = obj.makeTotalBeam(sphere,focal_beam, Tab, Tcd, Tfg);
-            [force,torque]= obj.calForce(total_beam,flag);
-            [forcefield,torquefield]=obj.getFTfield();
+            [total_beam,Coeff]    = obj.makeTotalBeam(sphere,focal_beam, Tab, Tcd, Tfg);
+            [force,torque,forceQ, torqueQ]= obj.calForce(total_beam);
+%             [obj.forcefield,obj.torquefield]=obj.getFTfield();
             
-            obj.StoreKeyVariables(lens, paraxial_beam, sphere, focal_beam,...
-                total_beam, force,torque);
+            obj.StoreKeyVariables(lens, paraxial_beam, sphere,...
+                focal_beam,total_beam,Coeff,...
+                force,torque,forceQ, torqueQ);
         end
-%         
-%         function makeForceField(obj)
-%             import model.phy.PhysicalObject.VectorField
-%             obj.forcefield=VectorField();
-%         end
             
         function field = wavefunction(obj,x,y,z)
             obj.parameters.SpherePosition=[x,y,z];

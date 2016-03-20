@@ -1,4 +1,4 @@
-function [total_beam,absCoeff] = makeTotalBeam ( obj, scatterer,focal_beam, Tab,Tcd,Tfg)
+function [total_beam,Coeff] = makeTotalBeam ( obj, scatterer,focal_beam, Tab,Tcd,Tfg)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -20,10 +20,10 @@ b1=(1i).^(n0-1)*pre.*a0;
 n1=n0;m1=m0;
 [a,b,n,m] = ott13.make_beam_vector(a1,b1,n1,m1);
 %root power for nomalization to a and b individually.
-pwr = sqrt(sum( abs(a).^2 + abs(b).^2 ));
+pwr = sum( abs(a).^2 + abs(b).^2 );
 % %normalize total momentum of wave sum to 1. Not good for SI EM field.
-% a=a/pwr;
-% b=b/pwr;
+% a=a/sqrt(pwr);
+% b=b/sqrt(pwr);
 %transform the partial wave coefficents to the sphere frame.
 [rt,theta,phi]=ott13.xyz2rtp(scatterer.x,scatterer.y,scatterer.z);
 R = ott13.z_rotation_matrix(theta,phi); %calculates an appropriate axis rotation off z.
@@ -40,7 +40,7 @@ q = pq(length(pq)/2+1:end);%It's noticed that [a2,b2,p,q] are incident-scatter b
 pwrsca = sum( abs(p).^2 + abs(q).^2 );
 pwrext =  -real(p'*a2+q'*b2);
 pwrabs = pwrext-pwrsca;
-absCoeff=pwrabs/pwr.^2;
+Coeff=[pwrabs,pwrsca,pwrext]./pwr;
 
 [M,~,N]=size(Tcd);M=M/2;
 cc=zeros(M,N);dd=zeros(M,N);ff=zeros(M,N);gg=zeros(M,N);

@@ -3,13 +3,16 @@ classdef TorqueField < model.phy.PhysicalObject.Vectorfield
     %   Detailed explanation goes here
     
     properties
+        sol;
     end
     
     methods
-        function field = wavefunction(obj,obj1,x,y,z)
-            obj1.parameters.SpherePosition=[x,y,z];
-            [~,torque]=obj1.perform();
-            field=torque;
+        function obj=TorqueField(sol)
+            obj.sol=sol;
+        end
+        function field = wavefunction(obj,x,y,z)
+            obj.sol.parameters.SpherePosition=[x,y,z];
+            [~,field]=obj.sol.perform();
         end
     end
     

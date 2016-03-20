@@ -1,4 +1,4 @@
-function [force, torque] = calForce(obj, total_beam, flag)
+function [force, torque,forceQ, torqueQ] = calForce(obj, total_beam)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -23,20 +23,20 @@ Dy = wignerD(Nmax,Ry');
 [fy,ty] = ott13.force_z(n,m,Dy*a2,Dy*b2,Dy*p,Dy*q); %Dx makes the z-force calculation the x-force calculation.
 
 force=[fx,fy,fz];
-force=force./pwr^2;
+forceQ=force./pwr^2;
 
 torque=[tx,ty,tz];
-torque=torque./pwr^2;
-torque=full(torque);
+torqueQ=torque./pwr^2;
+torqueQ=full(torqueQ);
 
-if nargin>2 && (flag==1)
+% if nargin>2 && (flag==1)
     c=constant('c');
     n=total_beam.focBeamS.medium.n;
     lambda=total_beam.focBeamS.wavelength;
     focalPower=obj.parameters.IncBeamPower;
-    force=n/c*focalPower*force*1e12;%pN unit
-    torque=n*lambda/c*focalPower*torque*1e18;%pN*um unit
-end
+    force=n/c*focalPower*forceQ*1e12;%pN unit
+    torque=n*lambda/c*focalPower*torqueQ*1e18;%pN*um unit
+% end
     
 end
 
