@@ -4,6 +4,7 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
     
     properties
         forcefield;
+        torquefield;
     end
     
     methods
@@ -33,7 +34,7 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
             obj.parameters.CutOffNMax = p.get_parameter('CutOff', 'NMax');
         end
         
-        function [force,torque]=perform(obj)
+        function [force,torque]=perform(obj,flag)
 %             import model.phy.PhysicalObject.Lens
                             obj.getNmax();
             lens          = obj.getLens();
@@ -44,9 +45,11 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
             [Tab, Tcd, Tfg]       = obj.getTmatrix(sphere);
             
             total_beam    = obj.makeTotalBeam(sphere,focal_beam, Tab, Tcd, Tfg);
-            [force,torque]= obj.calForce(total_beam,obj.parameters.IncBeamPower);
+            [force,torque]= obj.calForce(total_beam,flag);
+            [forcefield,torquefield]=obj.getFTfield();
             
-            obj.StoreKeyVariables(lens, paraxial_beam, sphere, focal_beam, total_beam, force,torque);
+            obj.StoreKeyVariables(lens, paraxial_beam, sphere, focal_beam,...
+                total_beam, force,torque);
         end
 %         
 %         function makeForceField(obj)
@@ -59,8 +62,7 @@ classdef MLSingleSphereOT  < model.phy.Solution.AbstractSolution
             force=obj.perform();            
             field=force;           
         end
-%         function [data, fig]= lineCut(obj, r0, r1, n, component)
-%         end
+
     end
     
 end

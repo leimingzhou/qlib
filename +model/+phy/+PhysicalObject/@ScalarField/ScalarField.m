@@ -8,5 +8,9 @@ classdef ScalarField < model.phy.PhysicalObject.PhysicalObject
     methods
     end
     
+    methods (Abstract)
+        wavefunction(obj)
+    end
+    
 end
 

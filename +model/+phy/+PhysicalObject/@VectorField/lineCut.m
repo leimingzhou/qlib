@@ -33,7 +33,8 @@ else           %not along an axis, show the figure x axis label with step number
 end
 
 if nargin>4
-    Ex=data(:, 4); Ey=data(:, 5); Ez=data(:, 6); Ea=conj(Ex).*Ex+conj(Ey).*Ey+conj(Ez).*Ez;
+    Ex=data(:, 4); Ey=data(:, 5); Ez=data(:, 6);
+    Ea=conj(Ex).*Ex+conj(Ey).*Ey+conj(Ez).*Ez;
     switch char(component)
         case 'ExR'
             fig=plot(x, real(Ex), 'r-');

@@ -1,4 +1,4 @@
-function [force, torque] = calForce(obj, total_beam, focalPower)
+function [force, torque] = calForce(obj, total_beam, flag)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -29,10 +29,11 @@ torque=[tx,ty,tz];
 torque=torque./pwr^2;
 torque=full(torque);
 
-if nargin>2
+if nargin>2 && (flag==1)
     c=constant('c');
     n=total_beam.focBeamS.medium.n;
     lambda=total_beam.focBeamS.wavelength;
+    focalPower=obj.parameters.IncBeamPower;
     force=n/c*focalPower*force*1e12;%pN unit
     torque=n*lambda/c*focalPower*torque*1e18;%pN*um unit
 end
