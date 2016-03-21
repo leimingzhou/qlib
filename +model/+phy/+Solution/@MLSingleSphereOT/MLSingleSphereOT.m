@@ -36,17 +36,17 @@ classdef MLSingleSphereOT  < model.phy.Solution.OTsolution.AbstractOTSolution
                             obj.getNmax();
             lens          = obj.getLens();
             paraxial_beam = obj.getIncBeam();
-            sphere        = obj.getScatterer();
+            scatterer        = obj.getScatterer();
             
             focal_beam    = obj.makeFocalBeam(lens, paraxial_beam);            
-            [Tab, Tcd, Tfg]       = obj.getTmatrix(sphere);
+            [Tab, Tcd, Tfg]       = obj.getTmatrix(scatterer);
+            [ScatCoeff,Coeff]              = obj.getScatCoeff (scatterer,focal_beam, Tab);            
+            [force,torque,forceQ, torqueQ] = obj.calForce(ScatCoeff);
+            total_beam    = obj.makeTotalBeam(scatterer,focal_beam,ScatCoeff,Tcd, Tfg);
             
-            [total_beam,Coeff]    = obj.makeTotalBeam(sphere,focal_beam, Tab, Tcd, Tfg);
-            [force,torque,forceQ, torqueQ]= obj.calForce(total_beam);
-            
-            obj.StoreKeyVariables(lens, paraxial_beam, sphere,...
-                focal_beam,total_beam,Coeff,...
-                force,torque,forceQ, torqueQ);
+            obj.StoreKeyVariables(lens, paraxial_beam, scatterer,...
+                focal_beam, total_beam, Coeff, ...
+                force, torque, forceQ, torqueQ);
         end
             
         function field = wavefunction(obj,x,y,z)

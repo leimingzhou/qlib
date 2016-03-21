@@ -1,13 +1,13 @@
-function [force, torque,forceQ, torqueQ] = calForce(obj, total_beam)
+function [force, torque,forceQ, torqueQ] = calForce(obj, ScatCoeff)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
 import model.math.misc.wignerD
 
 Nmax=obj.parameters.CutOffNMax;
-tmp=total_beam.nmabpqcd;
+tmp=ScatCoeff;
 n=tmp(:,1);m=tmp(:,2);a2=tmp(:,3);b2=tmp(:,4);
-p=tmp(:,5);q=tmp(:,6);%c=tmp(:,7);d=tmp(:,8);
+p=tmp(:,5);q=tmp(:,6);
 pwr = sqrt(sum( abs(a2).^2 + abs(b2).^2 ));%pwr2=pwr
 %normalizing to pwr(a2,b2) is slight different from normalizing to
 %pwr(a,b) in Lin, which can be neglected.
@@ -31,11 +31,13 @@ torqueQ=full(torqueQ);
 
 % if nargin>2 && (flag==1)
     c=constant('c');
-    n=total_beam.focBeamS.medium.n;
-    lambda=total_beam.focBeamS.wavelength;
-    focalPower=obj.parameters.IncBeamPower;
-    force=n/c*focalPower*forceQ*1e12;%pN unit
-    torque=n*lambda/c*focalPower*torqueQ*1e18;%pN*um unit
+    WorkingMedium=obj.parameters.WorkingMedium;
+    n=model.phy.data.MediumData.get_parameters(WorkingMedium).n;
+%     total_beam.focBeamS.medium.n;
+    lambda     = obj.parameters.IncBeamWaveLength;
+    focalPower = obj.parameters.IncBeamPower;
+    force  =n/c*focalPower*forceQ*1e12;%pN unit
+    torque =n*lambda/c*focalPower*torqueQ*1e18;%pN*um unit
 % end
     
 end

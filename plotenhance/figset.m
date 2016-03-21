@@ -1,17 +1,15 @@
-% function figset(fig)
-%figet function set the fiure with handle h,
+function figset(labelx,labely,labelfont,axisfont,pathname,data)
+%Script figsetsave sets and save the fiure just plotted,
 %for scientific paper in right size with all figure elements.
 %
-%   See also: savez1
+%   See also: ....
 
-set(gcf,'PaperSize',[21 16],'PaperPosition',[0.6, 0.6, 20, 15])
-set(gca,'LineWidth',2)
-xlabel('R/\mum','FontSize',48,'Interpreter','tex')
-ylabel('|E|^2','FontSize',48,'Interpreter','tex')
-set(gca,'FontName','Times New Roman','FontSize',36)
+%fig settings
+set(gcf,'PaperSize',[14.4 10.5],'PaperPosition',[0.4, 0.1, 14, 10])%A6 paper
+xlabel(labelx,'FontSize',labelfont,'Interpreter','tex')
+ylabel(labely,'FontSize',labelfont,'Interpreter','tex');
 grid on
-%         h = legend(legend1,legend2,1);
-%         set(h,'Interpreter','tex');
-%         title('lifetime');
-
-% end
+set(gca,'FontName','Times New Roman','FontSize',axisfont)
+saveas(gcf, [pathname, '.pdf']);
+dlmwrite([pathname '.txt'],data,'delimiter', '\t');
+end
