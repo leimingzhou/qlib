@@ -1,4 +1,4 @@
-classdef SingleSphereOpticalTweezers  < model.phy.Solution.OTsolution.AbstractOTSolution
+classdef SingleSphereOpticalTweezers  < model.phy.Solution.OTSolution.AbstractOTSolution
     %SINGLESPHEREOPTICALTWEEZERS Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -8,28 +8,15 @@ classdef SingleSphereOpticalTweezers  < model.phy.Solution.OTsolution.AbstractOT
     
     methods
         function obj=SingleSphereOpticalTweezers(xml_file)
-            obj@model.phy.Solution.OTsolution.AbstractOTSolution(xml_file);
+            obj@model.phy.Solution.OTSolution.AbstractOTSolution(xml_file);
         end
         
         function get_parameters(obj, p)
-            get_parameters@model.phy.Solution.OTsolution.AbstractOTSolution(obj, p);
-            
-            %             obj.parameters.FocalDistance = p.get_parameter('Lens', 'FocalDistance');
-            %             obj.parameters.WorkingMedium = p.get_parameter('Lens', 'Medium');
-            %             obj.parameters.NA            = p.get_parameter('Lens', 'NA');
-            %
-            %             obj.parameters.IncBeamCenter = p.get_parameter('IncBeam', 'Center');
-            %             obj.parameters.IncBeamP_L    = p.get_parameter('IncBeam', 'P_L');
-            %             obj.parameters.IncBeamPower  = p.get_parameter('IncBeam', 'Power');
-            %             obj.parameters.IncBeamPxPy   = p.get_parameter('IncBeam', 'PxPy');
-            %             obj.parameters.IncBeamWaist  = p.get_parameter('IncBeam', 'Waist');
-            %             obj.parameters.IncBeamWaveLength  = p.get_parameter('IncBeam', 'WaveLength');
+            get_parameters@model.phy.Solution.OTSolution.AbstractOTSolution(obj, p);
             %For scatterer
             obj.parameters.SpherePosition  = p.get_parameter('SphereScatterer', 'Position');
             obj.parameters.SphereRadius    = p.get_parameter('SphereScatterer', 'Radius');
             obj.parameters.SphereMedium    = p.get_parameter('SphereScatterer', 'Medium');
-            
-            %             obj.parameters.CutOffNMax = p.get_parameter('CutOff', 'NMax');
         end
         
         function [force,torque,forceQ, torqueQ]=perform(obj)
@@ -47,11 +34,6 @@ classdef SingleSphereOpticalTweezers  < model.phy.Solution.OTsolution.AbstractOT
             obj.StoreKeyVariables(lens, paraxial_beam, scatterer,...
                 focal_beam,total_beam,Coeff,...
                 force,torque,forceQ, torqueQ);
-        end
-        
-        function force = wavefunction(obj,x,y,z)
-            obj.parameters.SpherePosition=[x,y,z];
-            force=obj.perform();
         end
 
     end
