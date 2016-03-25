@@ -2,7 +2,7 @@ function [total_beam] = makeTotalBeam ( obj, scatterer,focal_beam, ScatCoeff,Tcd
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-import model.phy.PhysicalObject.LaserBeam.TotalBeamML
+import model.phy.PhysicalObject.OpticalTweezers.TotalBeamML
 
 n=ScatCoeff(:,1);m=ScatCoeff(:,2);a2=ScatCoeff(:,3);b2=ScatCoeff(:,4);
 p=ScatCoeff(:,5);q=ScatCoeff(:,6);
