@@ -32,7 +32,7 @@ else           %not along an axis, show the figure x axis label with step number
     end
 end
 
-if nargin>4
+if nargin>4 && (nargout==2)
     Ex=data(:, 4); Ey=data(:, 5); Ez=data(:, 6);
     Ea=conj(Ex).*Ex+conj(Ey).*Ey+conj(Ez).*Ez;
     switch char(component)
