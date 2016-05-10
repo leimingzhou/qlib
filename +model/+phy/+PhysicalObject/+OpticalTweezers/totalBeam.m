@@ -1,4 +1,4 @@
-classdef totalBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
+classdef TotalBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
     %UNTITLED Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -18,7 +18,7 @@ classdef totalBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
     end
     
     methods
-        function obj=totalBeam(n,m,a2,b2,p,q,c,d,scat1,lg1)
+        function obj=TotalBeam(n,m,a2,b2,p,q,c,d,scat1,lg1)
             obj.nmabpqcd=[n,m,a2,b2,p,q,c,d];
             obj.scatterer=scat1;
             medium2=lg1.lens.work_medium;
@@ -80,7 +80,7 @@ classdef totalBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
     
 end
 
-%local function of totalBeam
+%local function of TotalBeam
 function [ n,m,a,b ] = flatab2ab( n,m,a,b )
 %FLATAB2AB Summary of this function goes here
 %   Flatab2ab transform ab to original ab form.

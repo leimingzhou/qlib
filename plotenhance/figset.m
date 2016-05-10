@@ -10,6 +10,10 @@ xlabel(labelx,'FontSize',labelfont,'Interpreter','tex')
 ylabel(labely,'FontSize',labelfont,'Interpreter','tex');
 grid on
 set(gca,'FontName','Times New Roman','FontSize',axisfont)
+if nargin>4
 saveas(gcf, [pathname, '.pdf']);
+end
+if nargin>5
 dlmwrite([pathname '.txt'],data,'delimiter', '\t');
+end
 end
