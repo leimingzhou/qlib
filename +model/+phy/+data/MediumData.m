@@ -60,6 +60,15 @@ classdef MediumData
                 case 'diamond_a5'
                     epsilon_M = (2.418+1e-5*1i)^2;% For absorbtion test.
                     mu_M      = 1.0;
+                case 'gold_6372'
+                    epsilon_M = -10.85;% For absorbtion test.
+                    mu_M      = 1.0;
+                case 'gold_6372_a'
+                    epsilon_M = -10.85+1.27*1i;% For absorbtion test.
+                    mu_M      = 1.0;
+                case 'virtual_metal_a'
+                    epsilon_M = -1.5;% For absorbtion test.
+                    mu_M      = 1.0;
                 case 'ice'
                     epsilon_M = 1.31^2;% Tongcang Li's thesis P180.
                     mu_M      = 1.0;

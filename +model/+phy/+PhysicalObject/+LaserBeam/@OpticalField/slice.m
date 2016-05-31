@@ -1,4 +1,4 @@
-function [data, fig,data3] = slice( obj, r0, r1, r2, n1, n2)
+function [data, data3,fig] = slice( obj, r0, r1, r2, n1, n2,component)
 %SLICE Summary of this function goes here
 %   Detailed explanation goes here
 % This is a vector field with [E,H] computed simutaneously and plot E
@@ -33,10 +33,21 @@ for jj=0:n1
     end
 end
 
-X=reshape(x, [n2+1, n1+1]);
-Y=reshape(y, [n2+1, n1+1]);
-Z=reshape(z, [n2+1, n1+1]);
-fig=surf(X, Y, Z);
-
+if nargin>6 && nargout==3
+    X=reshape(x, [n2+1, n1+1]);
+    Y=reshape(y, [n2+1, n1+1]);
+    Field=reshape(z, [n2+1, n1+1]);
+%     figure;
+    switch char(component)
+        case 'real'
+            fig=surf(X,Y,real(Field));
+        case 'imag'
+            fig=surf(X,Y,imag(Field));
+        case 'abs'
+            fig=surf(X,Y,abs(Field));
+        case 'angle'
+            fig=surf(X,Y,angle(Field));
+    end
+end
 end
 

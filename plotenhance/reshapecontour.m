@@ -7,8 +7,8 @@ Z=reshape(data(:,3),n1,m1);
 figure
 contourf(x,y,Z,30,'LineStyle','none');
 % imagesc(x,y,Z);
-% colorbar
-colorbar('Limits',[0,3e13],'FontSize',72)
+colorbar
+% colorbar('Limits',[0,3e13],'FontSize',72)
 % colormap(jet);
 colormap(hot);
 xlabel(labelx,'FontSize',36,'Interpreter','tex')
