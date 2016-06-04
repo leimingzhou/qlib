@@ -15,19 +15,19 @@ classdef LinearCircularPol < model.phy.PhysicalObject.LaserBeam.AplanaticBeam.Ab
             [eField, hField]=obj.wavefunction_cylindrical(rho, phi, z1);
             eField=eField*obj.AmplitudeFactor;
             hField=hField*obj.AmplitudeFactor;
-
+            
         end
         
         function getVSWFcoeff(obj, maxN)
             [aList, wList]=obj.alpha_sampling(maxN);
-
-            sinA=sin(aList); cosA=cos(aList); 
+            
+            sinA=sin(aList); cosA=cos(aList);
             Qa=obj.Qpl(obj.incBeam.p, obj.incBeam.l, sinA, cosA);
             
             a=zeros(2*maxN+1, maxN);
             b=zeros(2*maxN+1, maxN);
             for n=1:maxN
-                for m=-n:n                    
+                for m=-n:n
                     [amn, bmn]=obj.vswf_coeff(m, n, Qa, cosA, wList);
                     a(m+maxN+1, n)=amn;
                     b(m+maxN+1, n)=bmn;
@@ -38,11 +38,16 @@ classdef LinearCircularPol < model.phy.PhysicalObject.LaserBeam.AplanaticBeam.Ab
             [bi, bj, bv]=find(b);
             
             obj.focBeam.aNNZ=[aj, ai-maxN-1, av];
-            obj.focBeam.bNNZ=[bj, bi-maxN-1, bv];
+            if length(bv)==0
+                obj.focBeam.bNNZ=[aj,ai-maxN-1,zeros(length(av),1)];
+            else
+                obj.focBeam.bNNZ=[bj, bi-maxN-1, bv];
+            end
+            
         end
         
         calcAmpFactor(Obj, Ppower);
-
+        
         
     end
     

@@ -7,7 +7,7 @@
       <Center type="eval">[0, 0, 0]</Center>
       <P_L type="eval">[0, 1]</P_L>
       <Power type="double">0.1</Power>
-      <PxPy type="eval">[1.0, 0.0]</PxPy>
+      <PxPy type="eval">[1, 0]</PxPy>
       <Waist type="double">950</Waist>
       <WaveLength type="double">1.064</WaveLength>
    </IncBeam>
