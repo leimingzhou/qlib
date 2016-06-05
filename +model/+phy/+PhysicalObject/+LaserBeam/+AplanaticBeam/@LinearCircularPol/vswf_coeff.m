@@ -16,7 +16,19 @@ if (px==2 && py==0 && obj.incBeam.l==1)% Radial polarized:pl=[p,1]
             qmn = 0.0;
     end
 elseif (px==0 && py==2 && obj.incBeam.l==1)% azimuthal polarized
-    error('Azimuthal polarization has not been finished');
+%     error('Azimuthal polarization has not been finished');
+    if m~=0
+        pmn=0.0; qmn=0.0;
+    else
+%         import model.phy.PhysicalObject.LaserBeam.assist.gammaMN
+        import model.phy.PhysicalObject.LaserBeam.assist.pi_tauMN
+        prefactor= sqrt((2*n+1)/n/(n+1));
+        [~, tau_mn]=pi_tauMN(m, n, cosA);     
+%         px=obj.incBeam.px; py=obj.incBeam.py;
+            pmn = 0.0;
+            qmn = prefactor*sum(wList.*Qa.*tau_mn)*(-1i);
+            
+    end
 else
     if m~=obj.incBeam.l+1 && m~=obj.incBeam.l-1
         pmn=0.0; qmn=0.0;

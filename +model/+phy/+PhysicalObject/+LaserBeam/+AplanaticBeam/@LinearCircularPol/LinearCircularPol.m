@@ -36,8 +36,11 @@ classdef LinearCircularPol < model.phy.PhysicalObject.LaserBeam.AplanaticBeam.Ab
             
             [ai, aj, av]=find(a);
             [bi, bj, bv]=find(b);
-            
-            obj.focBeam.aNNZ=[aj, ai-maxN-1, av];
+            if length(av)==0
+                obj.focBeam.aNNZ=[bj,bi-maxN-1,zeros(length(bv),1)];
+            else
+                obj.focBeam.aNNZ=[aj, ai-maxN-1, av];
+            end
             if length(bv)==0
                 obj.focBeam.bNNZ=[aj,ai-maxN-1,zeros(length(av),1)];
             else
