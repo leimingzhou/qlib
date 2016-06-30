@@ -26,7 +26,7 @@ classdef SingleSphereOpticalTweezers  < model.phy.Solution.OTSolution.AbstractOT
             scatterer        = obj.getScatterer();
             
             focal_beam    = obj.makeFocalBeam(lens, paraxial_beam);
-            [Tab, Tcd]       = obj.getTmatrix(scatterer);
+            [Tab, Tcd,a,b]       = obj.getTmatrix(scatterer);
             [ScatCoeff,Coeff]              = obj.getScatCoeff (scatterer,focal_beam, Tab);
             [force,torque,forceQ, torqueQ] = obj.calForce(ScatCoeff);
             total_beam    = obj.makeTotalBeam(scatterer,focal_beam,ScatCoeff,Tcd);

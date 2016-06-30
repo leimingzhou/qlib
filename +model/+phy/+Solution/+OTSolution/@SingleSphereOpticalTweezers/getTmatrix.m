@@ -1,4 +1,4 @@
-function [T, T2] = getTmatrix( obj, scatterer)
+function [T, T2,a,b] = getTmatrix( obj, scatterer)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %
@@ -9,7 +9,7 @@ k=n*2*pi/obj.parameters.IncBeamWaveLength;
 n_relative=scatterer.scatter_medium.n/n;
 Nmax=obj.parameters.CutOffNMax;
 
-[T, T2] = ott13.tmatrix_mie(Nmax,k,k*n_relative,scatterer.radius);
+[T, T2,a,b] = ott13.tmatrix_mie(Nmax,k,k*n_relative,scatterer.radius);
 T2=-T2;% OTT added a minus '-', so add another to cancel it here.
 
 end
