@@ -1,3 +1,6 @@
+%test
+test
+
 %Now we try to calculate the case of core-shell sphere.
 import model.phy.Solution.MLSingleSphereOT
 import model.phy.PhysicalObject.LaserBeam.totalBeam
