@@ -1,5 +1,5 @@
-%test
-test
+%This is a version trying to make Optical tweezers toolbox independent from
+%CCE and others.
 
 %Now we try to calculate the case of core-shell sphere.
 import model.phy.Solution.MLSingleSphereOT
