@@ -2,10 +2,11 @@
 %CCE and others.
 
 %Now we try to calculate the case of core-shell sphere.
-import model.phy.Solution.MLSingleSphereOT
-import model.phy.PhysicalObject.LaserBeam.totalBeam
+import model.phy.Solution.OTSolution.MLSingleSphereOT
+import model.phy.PhysicalObject.OpticalTweezers.ForceField
 sol=MLSingleSphereOT('OpticalTweezers.xml');
 force=sol.perform()
+%force=[-61.3285  -31.9790   41.6090];
 %% single point compare
 [efield, hfield,efieldinc, hfieldinc,efieldscat, hfieldscat]...
     =sol.result.total_beam.wavefunction(0.6,0.3,0.2)
