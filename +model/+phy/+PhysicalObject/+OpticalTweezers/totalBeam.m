@@ -2,6 +2,8 @@ classdef TotalBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
     %UNTITLED Summary of this class goes here
     %   Detailed explanation goes here
     
+    %test sync...
+    
     % It is noticed that fobBeamS,scatBeampq,scatBeamcd are stored for
     % field calculation. Since they use the the same abNie2Lin.m functon
     % the {pq,cd} differs from Lin with order or coeffcients, though the
