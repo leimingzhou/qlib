@@ -31,6 +31,7 @@ function [data, fig]= lineCut(obj, r0, r1, n, component)
         end
     end
     
+    fig=0;
     if nargin>4 && nargout==2
         figure;
     Ex=data(:, 4); Ey=data(:, 5); Ez=data(:, 6); Ea=conj(Ex).*Ex+conj(Ey).*Ey+conj(Ez).*Ez;

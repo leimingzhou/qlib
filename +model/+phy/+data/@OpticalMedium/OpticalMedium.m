@@ -1,24 +1,37 @@
-classdef MediumData
+classdef OpticalMedium <handle
     %MEDIUMDATA Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
+        lambda0=589e-9;
+        w=3.2e15;% initial lambda0=589nm.
+        %T=300;
+        epsilon_M=1.0;
+        mu_M=1.0;
+        n=1.0;
     end
     
-    methods (Static)
-        function medium = get_parameters(name)
-            [eM, muM]=model.phy.data.MediumData.data(name);
-            medium.name=name;
-            medium.eps=eM;
-            medium.mu=muM;
-            medium.n=sqrt(eM*muM);
-            medium.v=c_velocity/medium.n;
-            medium.Z=sqrt(muM/eM)*Z0;
+    methods
+        function obj = OpticalMedium(MediumMame,varargin)
+            if nargin==1
+                [epsilon_M, mu_M]=obj.getdata(MediumMame);
+            elseif nargin==2
+                w=varargin{1};
+                obj.w=w;
+                obj.lambda0=299792458*2*pi./w;
+                [epsilon_M, mu_M]=obj.getdata(MediumMame,w);
+            end
+                obj.epsilon_M=epsilon_M;
+                obj.mu_M     =mu_M;
+                obj.n        =sqrt(epsilon_M*mu_M);
         end
         
-        function [epsilon_M, mu_M]=data(name)
-            
-            switch char(name)
+        function [epsilon_M, mu_M]=getdata(obj,MediumMame,varargin)
+            if nargin==3
+                w=varargin{1};
+            end
+            switch char(MediumMame)
+                %             switch MediumMame
                 case 'vacuum'
                     epsilon_M = 1.0;
                     mu_M      = 1.0;
@@ -93,8 +106,11 @@ classdef MediumData
                 case 'oil1.6'
                     epsilon_M = 1.6;
                     mu_M      = 1.0;
+                case 'epsilon_w_silica'
+                    epsilon_M = epsilon_w_silica(w);
+                    mu_M      = 1.0;
                 otherwise
-                    error([name ' - unknown medium.']);
+                    error([MediumMame ' - unknown medium.']);
             end
         end
     end

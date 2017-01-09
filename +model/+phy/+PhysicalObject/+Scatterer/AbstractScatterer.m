@@ -7,6 +7,11 @@ classdef AbstractScatterer < model.phy.PhysicalObject.PhysicalObject
         y=0
         z=0
         scatter_medium %default SiO2.
+        
+%         dispersion='none';
+%         w=1e14;
+%         T=300;
+%         epsilon=1;%dielectric constant.
     end
     
     methods
@@ -18,6 +23,22 @@ classdef AbstractScatterer < model.phy.PhysicalObject.PhysicalObject
             %                 scatter_medium='silica';
             %             end
             obj.scatter_medium=model.phy.data.MediumData.get_parameters(scatter_medium);
+%             switch obj.dispersion
+%                 case 'none'
+%                     epsilon=1;
+%                 case 'w'
+%                     epsilon=1;% It will be changed in the main script.
+% %                     n=1.458;
+% %                     k=2.0e-9;
+% %                     epsilon=(n+1i*k).^2;
+% %                     epsilon=epslion_w(w);
+%                 case 'T'
+%                     disp('Disperion type not added yet!');
+%                     return;
+%                 otherwise
+%                     disp('Invalid disperion type');
+%                     return;
+%             end
         end
     end
     
