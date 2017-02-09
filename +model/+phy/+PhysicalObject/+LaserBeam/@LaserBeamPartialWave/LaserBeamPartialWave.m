@@ -5,7 +5,7 @@ classdef LaserBeamPartialWave < model.phy.PhysicalObject.LaserBeam.OpticalField
     properties
         k
         medium
-        wavelength
+        wavelength_m
         
         amplitude=1;
         AmplitudeFactor=1;
@@ -17,15 +17,15 @@ classdef LaserBeamPartialWave < model.phy.PhysicalObject.LaserBeam.OpticalField
     
     
     methods
-        function obj=LaserBeamPartialWave(name, wavelength, medium_name)
+        function obj=LaserBeamPartialWave(name, wavelength_m, medium_name)
             if nargin < 3
                 medium_name = 'air';
             end
             obj.medium=model.phy.data.MediumData.get_parameters(medium_name);
             
             obj.name=name;
-            obj.wavelength=wavelength;      %wavelength in medium
-            obj.k=2.0*pi/wavelength;        %wave number in medium
+            obj.wavelength_m=wavelength_m;      %wavelength in medium
+            obj.k=2.0*pi/wavelength_m;        %wave number in medium
         end
                 
         function setAmplitudeFactor(obj, amp)

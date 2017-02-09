@@ -11,6 +11,9 @@ classdef AbstractAplanaticBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
         
         f0 %filling factor
         AmplitudeFactor=1.0;%Factor to transform to focal plane power.
+        k
+        medium
+        wavelength_m
     end
     
     methods
@@ -18,9 +21,11 @@ classdef AbstractAplanaticBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
             obj.lens=lens;
             obj.incBeam=inc_beam;
             
-            medium2=lens.work_medium;
-            wavelength2=inc_beam.wavelength/medium2.n;
-            obj.focBeam=model.phy.PhysicalObject.LaserBeam.LaserBeamPartialWave('FocusedField', wavelength2, medium2.name);
+            obj.medium=lens.work_medium;%medium 2 in the note.
+            obj.wavelength_m=inc_beam.wavelength/obj.medium.n;
+            obj.k=2*pi/obj.wavelength_m;
+            obj.focBeam=model.phy.PhysicalObject.LaserBeam.LaserBeamPartialWave('FocusedField',...
+                obj.wavelength_m, obj.medium.name);
 
             obj.f0=inc_beam.w0/lens.focal_distance/sin(lens.aMax);
             obj.gs_order=GS_INT_ORDER;
@@ -43,9 +48,9 @@ classdef AbstractAplanaticBeam < model.phy.PhysicalObject.LaserBeam.OpticalField
         function val=get_amplitude_factor(obj)
             f=obj.lens.focal_distance;
             abs_E0= obj.incBeam.abs_E0;
-            k=obj.incBeam.k;
+%             k=obj.k;
 
-            ikf=1.j* k * f;
+            ikf=1.j* obj.k * f;
             eta_f= ikf*exp(-ikf);
             val=abs_E0*eta_f;
         end

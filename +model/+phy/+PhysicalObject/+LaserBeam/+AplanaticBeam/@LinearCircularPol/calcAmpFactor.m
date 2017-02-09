@@ -3,11 +3,12 @@ function calcAmpFactor( obj, Ppower)
 %with focal plane power Ppower
 %
 %   Detailed explanation goes here
-k=obj.incBeam.k;
+k=obj.k;
 px=obj.incBeam.px; py=obj.incBeam.py;
 Z=obj.lens.work_medium.Z;
 n1=obj.lens.inc_medium.n;
 n2=obj.lens.work_medium.n;
+f=obj.lens.focal_distance;
 
 nPiece=10;
 [aList, wList]=obj.alpha_sampling(nPiece);
@@ -30,6 +31,9 @@ else %LG linearly and circularly polarization
     Pfocal=wList*P1.'+wList*P2.';
 end
 amp=sqrt(Ppower/Pfocal)*1e6; % the 1e6 is because we use um as unit.
-obj.AmplitudeFactor=amp;
+yitaf=1i*k*f*exp(-1i*k*f);%objective lens at right
+% yitaf=-1i*k*f*exp(1i*k*f);%objective lens at left
+phase=angle(yitaf);
+obj.AmplitudeFactor=amp*exp(1i*phase);
 obj.focBeam.setAmplitudeFactor(amp);
 end

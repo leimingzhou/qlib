@@ -1,8 +1,8 @@
 function [eField, hField] = wavefunction_cylindrical( obj, rho, phi, z )
 %WAVEFUNCTION_CYLINDRICAL Summary of this function goes here
 %   Detailed explanation goes here
-    kz=obj.incBeam.k*z;
-    kr=obj.incBeam.k*rho;
+    kz=obj.k*z;
+    kr=obj.k*rho;
     px=obj.incBeam.px; py=obj.incBeam.py; %#ok<*PROP>
 
     nPiece=ceil(max([kz, kr, 1]));
