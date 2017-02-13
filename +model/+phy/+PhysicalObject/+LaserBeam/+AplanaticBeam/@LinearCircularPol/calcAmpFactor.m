@@ -34,7 +34,7 @@ amp=sqrt(Ppower/Pfocal)*1e6; % the 1e6 is because we use um as unit.
 yitaf=1i*k*f*exp(-1i*k*f);%objective lens at right
 % yitaf=-1i*k*f*exp(1i*k*f);%objective lens at left
 phase=angle(yitaf);
-% amp=amp*exp(1i*phase);
+amp=amp*exp(1i*phase);
 obj.AmplitudeFactor=amp;
 obj.focBeam.setAmplitudeFactor(amp);
 end
