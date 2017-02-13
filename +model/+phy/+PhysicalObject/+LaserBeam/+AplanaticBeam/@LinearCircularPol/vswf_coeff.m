@@ -30,7 +30,7 @@ elseif (px==0 && py==2 && obj.incBeam.l==1)% azimuthal polarized
             
     end
 else
-    if m~=obj.incBeam.l+1 && m~=obj.incBeam.l-1
+    if m~=(obj.incBeam.l+1) && m~=(obj.incBeam.l-1)
         pmn=0.0; qmn=0.0;
     else
         import model.phy.PhysicalObject.LaserBeam.assist.gammaMN
@@ -41,7 +41,7 @@ else
         [pi_mn, tau_mn]=pi_tauMN(m, n, cosA);
         
         px=obj.incBeam.px; py=obj.incBeam.py;
-        if m==obj.incBeam.l+1
+        if m==(obj.incBeam.l+1)
             pmn = prefactor*( px-1.j*py)*sum(wList.*Qa.*(pi_mn+tau_mn));
             qmn = pmn;
         else %m==obj.l-1
