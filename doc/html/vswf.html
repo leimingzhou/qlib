@@ -1,0 +1,385 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Vector Spherical Wavefunctions</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-02-22"><meta name="DC.source" content="vswf.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Vector Spherical Wavefunctions</h1><!--introduction--><p>Vector spherical wavefunctions (VSWFs) are a basic building-blocks in the  theory of optical scattering on nano-particles. Although the VSWFs have very beautiful analytical properties, their definitions are different in different references and code implementations. In the following, we compare and summarize the definitions of VSWFs and related special functions (e.g., Legendre polynomials and spherical harmonics) in (i) Matlab&reg; and Mathematica&reg; build-in functions, (ii) Zhu-Xi Wang, textbook 'Introduction of Special Functions', (iii) M. I. Mishchenko, et. al., 'Scattering, Absorption and Emission of Light by Small Particles', (iv) Optical tweezers toolbox (OTT) and (v) Prof. Zhi-Fang Lin's note.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Legendre Polynomials</a></li><li><a href="#5">Spherical Harmonic Functions</a></li><li><a href="#7">Spherical Bessel and Spherical Hankel Functions</a></li><li><a href="#9">Vector Spherical Wavefunctions</a></li></ul></div><h2>Legendre Polynomials<a name="1"></a></h2><div><ul><li>In Matlab&reg;, Legendre Polynomials <img src="vswf_eq15324096348478421560.png" alt="$P_n(x)$"> for <img src="vswf_eq12132790651647315858.png" alt="$x\in [-1, 1]$"> and positive integer <img src="vswf_eq08984225997457563733.png" alt="$n$"> are defined as</li></ul></div><p><img src="vswf_eq15832833905200681124.png" alt="$$ P_n(x) = \frac{1}{2^n n!}\frac{d}{d x} (x^2-1)^n $$"></p><p>and, for <img src="vswf_eq00743480147457502023.png" alt="$0\le m \le n$">, the associated Legendre functions are</p><p><img src="vswf_eq09900295874443408121.png" alt="$$ P_n^m(x) = (-1)^m (1-x^2)^{m/2} \frac{d^m}{dx^m}P_n(x). $$"></p><p>With this definition, Legendre Polynomials are normalized to</p><p><img src="vswf_eq05295306372946845584.png" alt="$$ \int_{-1}^1 P_n^m(x)P_{n'}^{m'}(x)dx = \frac{2}{2n+1}&#xA;\frac{(n+m)!}{(n-m)!}\delta_{mm'}\delta_{nn'} $$"></p><p>The same definitions are also used in Mathematica&reg;, Mishchenko's book, and Wang's book. Here is an example in Matlab&reg;:</p><pre class="codeinput">pmn=legendre(3, -1:0.01:1);
+plot(-1:0.01:1, pmn);
+
+<span class="comment">% normalization</span>
+n=3;
+[xlist, wlist]=model.math.misc.lgwt(50, -1, 1);
+inte=(legendre(n, xlist).^2) * wlist;
+norm=zeros(n+1,1);
+<span class="keyword">for</span> m=0:n
+    norm(m+1)=2.0/(2*n+1) * factorial(n+m)/factorial(n-m);
+<span class="keyword">end</span>
+disp([inte, norm])
+</pre><pre class="codeoutput">    0.2857    0.2857
+    3.4286    3.4286
+   34.2857   34.2857
+  205.7143  205.7143
+</pre><img vspace="5" hspace="5" src="vswf_01.png" alt=""> <div><ul><li>Prof. Lin's note uses a different convention in <img src="vswf_eq06531663414357919083.png" alt="$P_n^m(x)$">, where <img src="vswf_eq10803921026015350033.png" alt="$(-1)^m$"> is omitted, i.e.,</li></ul></div><p><img src="vswf_eq10816552198937457172.png" alt="$$ \tilde{P}_n^m(x) = (1-x^2)^{m/2} \frac{d^m}{dx^m}P_n(x). $$"></p><div><ul><li>OTT uses a different normalization convention, where <img src="vswf_eq06531663414357919083.png" alt="$P_n^m(x)$"> are normalized to a constant <img src="vswf_eq01907393773672427367.png" alt="$1/(2\pi)$">:</li></ul></div><p><img src="vswf_eq02180955992629602768.png" alt="$$ \hat{P}_n^m(x)= \sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}}\tilde{P}_n^m(x).&#xA;$$"></p><p>Note that, essentially, OTT uses the same sign convention as Lin's note and the "fully normalized associated Legendre functions". (i.e., omitting the <img src="vswf_eq10803921026015350033.png" alt="$(-1)^m$"> factor).</p><p>In addition, OTT uses the polar angle <img src="vswf_eq08288499342375314727.png" alt="$\theta$"> as the argument, instead of <img src="vswf_eq16126349209308916394.png" alt="$x=\cos\theta$">.</p><pre class="codeinput">disp([ott13.legendrerow(n, pi/3) ,legendre(n, cos(pi/3), <span class="string">'norm'</span>)/sqrt(2*pi)] );
+
+[tlist, wlist]=model.math.misc.lgwt(50, 0, pi);
+disp((ott13.legendrerow(n, tlist).^2) * (wlist.*sin(tlist)) * 2*pi);
+</pre><pre class="codeoutput">   -0.3265   -0.3265
+    0.0700    0.0700
+    0.3832    0.3832
+    0.2710    0.2710
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+</pre><div><ul><li>Legendre polynomials with negative <img src="vswf_eq11319871188381094158.png" alt="$m$"> are defined as (see e.g., Wang's book and Lin's Note)</li></ul></div><p><img src="vswf_eq16714325438351583556.png" alt="$$ P_n^{-\vert m\vert} (x)= (-1)^m \frac{(n-\vert m)!}{(n+\vert m)!} P_n^{\vert m \vert}(x) $$"></p><p>However, Matlab&reg; and OTT do not export Legendre polynomials with <img src="vswf_eq01312110428296447595.png" alt="$m<0$"> directly (only <img src="vswf_eq01663609880624087002.png" alt="$m=0\dots n$"> are exported). Legendre polynomials with negative <img src="vswf_eq11319871188381094158.png" alt="$m$"> are used when computing Spherical harmonic functions <img src="vswf_eq00006857488387994539.png" alt="$Y_{n,m}(\theta, \phi)$"> in OTT.</p><h2>Spherical Harmonic Functions<a name="5"></a></h2><p>Spherical harmonic functions <img src="vswf_eq09984668202380645345.png" alt="$Y_{n, m}(\theta, \phi)$"> are defined as (Wang's book and Mathematica&reg;)</p><p><img src="vswf_eq06684680267244324520.png" alt="$$Y_{n,m}(\theta, \phi)=\sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}}&#xA;P_n^m(\cos\theta) e^{i m \phi}=\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}P_n^m(\cos\theta) e^{i m \phi}, $$"></p><p>where</p><p><img src="vswf_eq13660145012710399230.png" alt="$$ \gamma_{n,m}=\frac{(2n+1)(n-m)!}{n(n+1)(n+m)!}.$$"></p><p>Matlab does not provide a direct implementation of sphercial harmonic functions, while Mathematica&reg; and OTT do</p><pre class="codeinput">n=5; m=3;
+disp(ott13.spharm(n, m, pi/3, pi/5));
+disp(ott13.spharm(n, -m, pi/3, pi/5));
+n=5; m=2;
+disp(ott13.spharm(n, m, pi/3, pi/5));
+disp(ott13.spharm(n, -m, pi/3, pi/5));
+</pre><pre class="codeoutput">  -0.0868 + 0.2671i
+   0.0868 + 0.2671i
+  -0.0491 - 0.1511i
+  -0.0491 + 0.1511i
+</pre><p>We checked that, OTT result differs to the Mathematica result by a factor of <img src="vswf_eq10803921026015350033.png" alt="$(-1)^m$"> due to the different sign convention of Legendre polynomials. We denote Spherical harmonics of OTT by</p><p><img src="vswf_eq03157009633674497965.png" alt="$$ \tilde{Y}_{n,m }(\theta,\phi)= \hat{P}_n^m(\cos\theta) e^{i m \phi}=\sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}}&#xA;\tilde{P}_n^m(\cos\theta) e^{i m \phi}=\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\tilde{P}_n^m(\cos\theta) e^{i m \phi}. $$"></p><p>In both Mathematica&reg; and OTT implementations, the Spherical harmonics are normalized to unity (see Wang's book), i.e.,</p><p><img src="vswf_eq13776764514367108916.png" alt="$$ \int_0^{\pi}d\theta\int_0^{2\pi}d\phi \sin\theta Y_{n, m}(\theta, \phi)Y_{n',&#xA;m'}^{*}(\theta, \phi) = \delta_{n, n'}\delta_{m, m'}, $$"></p><p>and the following relation is satisfied (see Wang's book)</p><p><img src="vswf_eq05619452476252574645.png" alt="$$ Y_{n,-m}(\theta, \phi)= (-1)^m Y_{n, m}^{*}(\theta, \phi). $$"></p><h2>Spherical Bessel and Spherical Hankel Functions<a name="7"></a></h2><p>Spherical Bessel and Spherical Hankel functions are used to describe the wave propagation in the radial direction.</p><div><ul><li>Spherical Bessel function of the first kind <img src="vswf_eq01324120839280472480.png" alt="$j_n(r)$"> and second kind <img src="vswf_eq14421885934147622488.png" alt="$y_n(r)$"> are indeed the corresponding Bessel function <img src="vswf_eq02625886623749642146.png" alt="$J_n(r)$"> and <img src="vswf_eq11670534026982376695.png" alt="$Y_n(r)$"> of half-integer order</li></ul></div><p><img src="vswf_eq07130132502329324672.png" alt="$$ j_n(r)= \sqrt{\frac{\pi}{2r}}J_{n+1/2}(r). $$"></p><p><img src="vswf_eq11248624570520418484.png" alt="$$ y_n(r)= \sqrt{\frac{\pi}{2r}}Y_{n+1/2}(r). $$"></p><p><img src="vswf_eq01324120839280472480.png" alt="$j_n(r)$"> has fintite value at <img src="vswf_eq17356595364700422427.png" alt="$r=0$">, while <img src="vswf_eq14421885934147622488.png" alt="$y_n(r)$"> diverges at <img src="vswf_eq17356595364700422427.png" alt="$r=0$">.</p><p>Matlab&reg; does not provide a direct implementation of <img src="vswf_eq01324120839280472480.png" alt="$j_n(r)$">. OTT and Mathematica&reg; have identical implementations.</p><pre class="codeinput">plot(0:0.1:10, [ott13.sbesselj(0, 0:0.1:10)'; <span class="keyword">...</span>
+                ott13.sbesselj(1, 0:0.1:10)'; <span class="keyword">...</span>
+                ott13.sbesselj(2, 0:0.1:10)']);
+</pre><img vspace="5" hspace="5" src="vswf_02.png" alt=""> <div><ul><li>Spherical Hankel functions of the first kind <img src="vswf_eq16881756852434838478.png" alt="$h^{(1)}_n(r)$"> and the second kind <img src="vswf_eq09386739907274217701.png" alt="$h^{(2)}_n(r)$"> are half-integer order Hankel functions <img src="vswf_eq15627205267116720808.png" alt="$H^{(1)}_n(r)$"> and <img src="vswf_eq01885991763814406468.png" alt="$H^{(2)}_n(r)$">.</li></ul></div><p><img src="vswf_eq02801691512489028470.png" alt="$$ h^{(1,2)}(r) = \sqrt{\frac{\pi}{2r}} H^{(1,2)}(r) = j_n(r) \pm i&#xA;y_n(r). $$"></p><p>Matlab&reg; does not provide a direct implementation of <img src="vswf_eq15569676401081257785.png" alt="$h^{(1,2)}_n(x)$">. OTT and Mathematica&reg; have identical implementations.</p><h2>Vector Spherical Wavefunctions<a name="9"></a></h2><p>With Spherical harmonic function <img src="vswf_eq17806633731698265054.png" alt="$Y_{n,m}(\theta,\phi)$">, spherical Bessel functions <img src="vswf_eq01324120839280472480.png" alt="$j_n(r)$"> and spherical Hankel functions <img src="vswf_eq08483842340643559621.png" alt="$h_n^{(1,2)}(r)$">, we can further define vector spherical wavefunctions <img src="vswf_eq14933663876752715938.png" alt="$\mathbf{M}^{(q)}_{n,m}(kr, \theta, \phi)$"> and <img src="vswf_eq16805122040112544482.png" alt="$\mathbf{N}^{(q)}_{n,m}(kr, \theta, \phi)$">.</p><div><ul><li><b>Vector Spherical Harmonics</b></li></ul></div><p>Before VSWFs, we first define vector spherical harmonics (VSHs) <img src="vswf_eq09749056043461094061.png" alt="$\mathbf{B}(\theta, \phi)$">, <img src="vswf_eq10341268196822579679.png" alt="$\mathbf{C}(\theta, \phi)$">, and <img src="vswf_eq04885250173375691219.png" alt="$\mathbf{P}(\theta, \phi)$">. Here, we adopt the definition in the OTT documentation, but with a typo corrected in <img src="vswf_eq05654871179673518783.png" alt="$\mathbf{B}_{n,m}$">.</p><p><img src="vswf_eq12101287905760536855.png" alt="$$ \mathbf{B}_{n,m}(\theta, \phi)=r\nabla Y_{n, m}(\theta, \phi) =&#xA;\hat{\mathbf{r}}\times \mathbf{C}_{n,m}(\theta,\phi)&#xA;=\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\left[\tau_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}+i\pi_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}, $$"></p><p><img src="vswf_eq02740408182970937471.png" alt="$$ \mathbf{C}_{n,m}(\theta, \phi)=\nabla\times(\mathbf{r}Y_{n, m}(\theta, \phi)) =&#xA;\mathbf{B}_{n,m}(\theta,\phi) \times  \hat{\mathbf{r}}&#xA;=\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\left[i\pi_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}-\tau_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}, $$"></p><p><img src="vswf_eq05266572322791252835.png" alt="$$ \mathbf{P}_{n,m}(\theta, \phi)=\hat{\mathbf{e}}_r Y_{n, m}(\theta,&#xA;\phi)=\hat{\mathbf{e}}_r\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\tilde{P}_n^m(\cos\theta) e^{i m \phi},$$"></p><p>where <img src="vswf_eq01675729572473871188.png" alt="$\pi_{n, m}(\theta)$"> and <img src="vswf_eq03743549358255809658.png" alt="$\tau_{n, m}(\theta)$"> are</p><p><img src="vswf_eq12331576930178807198.png" alt="$$ \pi_{n, m}(\theta)=\frac{m}{\sin\theta}\tilde{P}_n^m(\theta), $$"></p><p><img src="vswf_eq03889296352133125260.png" alt="$$ \tau_{n, m}(\theta)=\frac{d}{d\theta}\tilde{P}_n^m(\theta). $$"></p><p>Because of the following facts (see Lin's Note)</p><p><img src="vswf_eq07878898945932004683.png" alt="$$ \int_{0}^{\pi} (\pi_{n,m}\pi_{n',m}+\tau_{n,m}\tau_{n',m})\sin\theta&#xA;d\theta=\frac{2n(n+1)}{2n+1}\frac{(n+m)!}{(n-m)!}\delta_{n,n'}=\frac{2}{\gamma_{n,m}^2}\delta_{n,n'}, $$"></p><p><img src="vswf_eq03037918285068280136.png" alt="$$ \int_{0}^{\pi} (\pi_{n,m}\tau_{n',m}+\pi_{n,m}\tau_{n',m})\sin\theta&#xA;d\theta=0, $$"></p><p>The VSHs <img src="vswf_eq16965273467303282911.png" alt="$\mathbf{B}_{n,m}(\theta,\phi)$">, <img src="vswf_eq10085044399922786638.png" alt="$\mathbf{C}_{n,m}(\theta,\phi)$"> and <img src="vswf_eq05082935525151683494.png" alt="$\mathbf{P}_{n,m}(\theta,\phi)$"> are orthorganal and are normalized as</p><p><img src="vswf_eq03554505224247277751.png" alt="$$ \int_{0}^{\pi}  d\theta\int_0^{2\pi} d\phi&#xA;\left( \sin\theta \mathbf{B}_{n,m}^{*}(\theta,\phi)\cdot\mathbf{B}_{n,m}(\theta,\phi)\right)=\int_{0}^{\pi}  d\theta\int_0^{2\pi} d\phi&#xA;\left( \sin\theta \mathbf{C}_{n,m}^{*}(\theta,\phi)\cdot\mathbf{C}_{n,m}(\theta,\phi)\right) =\frac{n(n+1)}{2\pi}. $$"></p><p><img src="vswf_eq12806051340638910613.png" alt="$$ \int_{0}^{\pi}  d\theta\int_0^{2\pi} d\phi \left( \sin\theta&#xA;\mathbf{P}_{n,m}^{*}(\theta,\phi)\cdot\mathbf{P}_{n,m}(\theta,\phi)\right)=\int_{0}^{\pi}&#xA;d\theta\int_0^{2\pi} d\phi&#xA;\left(\sin\theta Y_{n,m}^{*}(\theta,\phi)Y_{n,m}(\theta,\phi)\right)=1. $$"></p><div><ul><li><b>Vector Spherical Wavefunctions</b></li></ul></div><p>In OTT, the electromagnetic fields are expanded using VSWFs as</p><p><img src="vswf_eq08007250204422426557.png" alt="$$ \mathbf{E}(\mathbf{r})=\vert E_0\vert \sum_{n=1}^{\infty}\sum_{m=-n}^{n} p_{n,m}&#xA;\mathbf{N}^{(q)}_{n,m}(\mathbf{r})+q_{n,m} \mathbf{M}^{(q)}_{n,m}(\mathbf{r}),$$"></p><p>where the VSWFs in OTT are defined as follows</p><p><img src="vswf_eq05420567858868277799.png" alt="$$ \mathbf{M}^{(q)}_{n,m} (\mathbf{r})=&#xA;N_n z^{(q)}_n(kr)\mathbf{C}_{m,n}(\theta,\phi)&#xA;=\sqrt{\frac{\gamma_{n,m}}{4\pi}}\left\{ z^{(q)}_n(kr)\left[i\pi_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}-\tau_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}\right\}, $$"></p><p><img src="vswf_eq15300811246052004186.png" alt="$$ \mathbf{N}^{(q)}_{n,m} (\mathbf{r})=&#xA;\frac{z^{(q)}_n(kr)}{N_n kr}\mathbf{P}_{n,m}(\theta,\phi) +&#xA;N_n\frac{(kr z^{(q)}_n(kr))'}{kr}\mathbf{B}_{m,n}(\theta,\phi)&#xA;=\sqrt{\frac{\gamma_{n,m}}{4\pi}} \left\{n(n+1)\frac{z^{(q)}_n(kr)}{kr} \tilde{P}_n^m(\cos\theta)&#xA;e^{i m \phi}\hat{\mathbf{e}}_r \right\}&#xA;+\sqrt{\frac{\gamma_{n,m}}{4\pi}}\left\{\frac{(kr z^{(q)}_n(kr))'}{kr}\left[\tau_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}+i\pi_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}\right\}, $$"></p><p>where <img src="vswf_eq13804917953812618232.png" alt="$z_n^{(q)}(kr)=j_n(kr), y_n(kr), h^{(1)}_n(kr)$">, or <img src="vswf_eq04359891961529602927.png" alt="$h^{(2)}_n(kr)$"> for <img src="vswf_eq01264741832108226857.png" alt="$q=1,2, 3$"> or <img src="vswf_eq04941290416507909356.png" alt="$4$">, the factor <img src="vswf_eq14667455627585641919.png" alt="$N_n=[n(n+1)]^{-1/2}$">, and</p><p><img src="vswf_eq10811446429444372406.png" alt="$$ \frac{(kr z^{(q)}_n(kr))'}{kr} = z^{(q)}_{n-1}(kr) - \frac{nz^{(q)}_n(kr)}{kr}.$$"></p><p>Professor Lin's note does not explicitely define the VSHs <img src="vswf_eq05654871179673518783.png" alt="$\mathbf{B}_{n,m}$">, <img src="vswf_eq17370900733999535803.png" alt="$\mathbf{C}_{n,m}$">, and <img src="vswf_eq11704641162652272256.png" alt="$\mathbf{P}_{n,m}$">. The VSWFs in Prof. Lin's note were defined by the factor in the brace braket <img src="vswf_eq18114008402112594643.png" alt="$\{\cdot\}$">, i.e.,</p><p><img src="vswf_eq00893946237887044285.png" alt="$$ \tilde{\mathbf{M}}^{(q)}_{n,m} (\mathbf{r})=&#xA;z^{(q)}_n(kr)\left[i\pi_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}-\tau_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}&#xA;= \sqrt{\frac{4\pi}{\gamma_{n,m}}}\mathbf{M}^{(q)}_{n,m} (\mathbf{r}), $$"></p><p><img src="vswf_eq11708981069100920781.png" alt="$$ \tilde{\mathbf{N}}^{(q)}_{n,m} (\mathbf{r})= n(n+1)\frac{z^{(q)}_n(kr)}{kr} \tilde{P}_n^m(\cos\theta) e^{i m \phi}\hat{\mathbf{e}}_r&#xA;+ \frac{(kr z^{(q)}_n(kr))'}{kr}\left[\tau_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}+i\pi_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}&#xA;= \sqrt{\frac{4\pi}{\gamma_{n,m}}}\mathbf{N}^{(q)}_{n,m} (\mathbf{r}), $$"></p><p>Furthremore, In the field expansions, Prof. Lin's note explicitely includes a factor <img src="vswf_eq12059966867826588151.png" alt="$\sqrt{\gamma_{n,m}}$">, i.e.,</p><p><img src="vswf_eq00850719135928742190.png" alt="$$ \mathbf{E}(\mathbf{r})=-\sum_{n=1}^{\infty}\sum_{m=-n}^{n} iE_{n,m}\left[\tilde{p}_{n,m}&#xA;\tilde{\mathbf{N}}^{(q)}_{n,m}(\mathbf{r})+\tilde{q}_{n,m} \tilde{\mathbf{M}}^{(q)}_{n,m}(\mathbf{r})\right]&#xA;= \vert E_0\vert \sum_{n=1}^{\infty}\sum_{m=-n}^{n} i^{n-1}\sqrt{4\pi}&#xA;\left[ \tilde{p}_{n,m}\mathbf{N}^{(q)}_{n,m} (\mathbf{r}) + \tilde{q}_{n,m}\mathbf{M}^{(q)}_{n,m} (\mathbf{r})\right],$$"></p><p>where <img src="vswf_eq12910735108969461244.png" alt="$E_{n,m}=\vert E_0\vert i^n \sqrt{\gamma_{n,m}}$">.</p><p>In <i>qlib</i>, we adopt the field expansion formulas in Professor Lin's note to calculate the expansion coefficients <img src="vswf_eq11850826813620863439.png" alt="$\tilde{p}_{n,m}$">, and <img src="vswf_eq10727152322209638635.png" alt="$\tilde{q}_{n,m}$">. When reproducing the fields by summing up, we use the OTT implementation of VSWFs <img src="vswf_eq10046255252413164381.png" alt="$\mathbf{M}^{(q)}_{n,m} (\mathbf{r})$"> and <img src="vswf_eq07510307954484024431.png" alt="$\mathbf{N}^{(q)}_{n,m} (\mathbf{r})$">. According to the derivation above, an extra factor of <img src="vswf_eq02285371825874722054.png" alt="$i^{n-1}\sqrt{4\pi}$"> should be included in the code.</p><p>Now, we discuss the expansion of magnetic field <img src="vswf_eq17861382446292614518.png" alt="$\mathbf{H}(\mathbf{r})$">. For a time-harmonics wave in a linear, isotropic and homogeneous medium, the magnetic field relates to the electric field by [see ]</p><p><img src="vswf_eq00444422714309674665.png" alt="$$\mathbf{H}(\mathbf{r})= \frac{\nabla \times&#xA;\mathbf{E}(\mathbf{r})}{i\omega \mu}.$$"></p><p>Using the relations between <img src="vswf_eq03709805479914996474.png" alt="$\mathbf{M}_{n,m}(\mathbf{r})$"> and <img src="vswf_eq16947751391625047901.png" alt="$\mathbf{N}_{n,m}(\mathbf{r})$"> [see]</p><p><img src="vswf_eq05626067184870779863.png" alt="$$\nabla \times \mathbf{M}_{n,m}(\mathbf{r})=k\mathbf{N}_{n,m}(\mathbf{r})$$"></p><p><img src="vswf_eq04707031159588663778.png" alt="$$\nabla \times \mathbf{N}_{n,m}(\mathbf{r})=k\mathbf{M}_{n,m}(\mathbf{r})$$"></p><p>and <img src="vswf_eq01816087277508225327.png" alt="$k/(\omega\mu) = n/(c\mu) = \sqrt{\epsilon/\mu}=1/Z$"> (<img src="vswf_eq08422257486649890878.png" alt="$c$"> is the vacumme light velocity, <img src="vswf_eq08984225997457563733.png" alt="$n$"> is the refractive index, and <img src="vswf_eq03445976996961613883.png" alt="$Z=\sqrt{\mu/\epsilon}$"> is the wave impedance) one have</p><p><img src="vswf_eq02135706205392497386.png" alt="$$ \mathbf{H}(\mathbf{r})&#xA;= \frac{k \vert E_0\vert}{i\omega\mu} \sum_{n=1}^{\infty}\sum_{m=-n}^{n} i^{n-1}\sqrt{4\pi}&#xA;\left[ \tilde{p}_{n,m}\mathbf{M}^{(q)}_{n,m} (\mathbf{r}) + \tilde{q}_{n,m}\mathbf{N}^{(q)}_{n,m} (\mathbf{r})\right]&#xA;= \frac{\vert E_0\vert}{iZ} \sum_{n=1}^{\infty}\sum_{m=-n}^{n} i^{n-1}\sqrt{4\pi}&#xA;\left[ \tilde{p}_{n,m}\mathbf{M}^{(q)}_{n,m} (\mathbf{r}) + \tilde{q}_{n,m}\mathbf{N}^{(q)}_{n,m} (\mathbf{r})\right],$$"></p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Vector Spherical Wavefunctions
+% Vector spherical wavefunctions (VSWFs) are a basic building-blocks in the  theory
+% of optical scattering on nano-particles. Although the VSWFs have very
+% beautiful analytical properties, their definitions are different in
+% different references and code implementations. In the following, we
+% compare and summarize the definitions of VSWFs and related special functions
+% (e.g., Legendre polynomials and spherical harmonics) in (i) Matlab(R) and Mathematica(R)
+% build-in functions, (ii) Zhu-Xi Wang, textbook 'Introduction of Special Functions',
+% (iii) M. I. Mishchenko, et. al., 'Scattering, Absorption and Emission of
+% Light by Small Particles', (iv) Optical tweezers toolbox (OTT) and (v) Prof. Zhi-Fang Lin's note.
+
+%% Legendre Polynomials
+% * In Matlab(R), Legendre Polynomials $P_n(x)$ for $x\in [-1, 1]$ and positive integer $n$ are defined as
+%
+% $$ P_n(x) = \frac{1}{2^n n!}\frac{d}{d x} (x^2-1)^n $$
+%
+% and, for $0\le m \le n$, the associated Legendre functions are
+%
+% $$ P_n^m(x) = (-1)^m (1-x^2)^{m/2} \frac{d^m}{dx^m}P_n(x). $$
+%
+% With this definition, Legendre Polynomials are normalized to 
+%
+% $$ \int_{-1}^1 P_n^m(x)P_{n'}^{m'}(x)dx = \frac{2}{2n+1}
+% \frac{(n+m)!}{(n-m)!}\delta_{mm'}\delta_{nn'} $$
+%
+% The same definitions are also used in Mathematica(R), Mishchenko's book,
+% and Wang's book. Here is an example in Matlab(R):
+
+pmn=legendre(3, -1:0.01:1);
+plot(-1:0.01:1, pmn);
+
+% normalization
+n=3;
+[xlist, wlist]=model.math.misc.lgwt(50, -1, 1);
+inte=(legendre(n, xlist).^2) * wlist;
+norm=zeros(n+1,1);
+for m=0:n
+    norm(m+1)=2.0/(2*n+1) * factorial(n+m)/factorial(n-m);
+end
+disp([inte, norm])
+
+%%
+% * Prof. Lin's note uses a different convention in $P_n^m(x)$, where
+% $(-1)^m$ is omitted, i.e.,
+%
+% $$ \tilde{P}_n^m(x) = (1-x^2)^{m/2} \frac{d^m}{dx^m}P_n(x). $$
+%
+%%
+% * OTT uses a different normalization convention, where $P_n^m(x)$ are normalized to
+% a constant $1/(2\pi)$:
+%
+% $$ \hat{P}_n^m(x)= \sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}}\tilde{P}_n^m(x).
+% $$
+% 
+% Note that, essentially, OTT uses the same sign convention as Lin's note
+% and the "fully normalized associated Legendre functions".
+% (i.e., omitting the $(-1)^m$ factor).
+%
+% In addition, OTT uses the polar angle $\theta$ as the argument, instead of $x=\cos\theta$.
+
+disp([ott13.legendrerow(n, pi/3) ,legendre(n, cos(pi/3), 'norm')/sqrt(2*pi)] );
+
+[tlist, wlist]=model.math.misc.lgwt(50, 0, pi);
+disp((ott13.legendrerow(n, tlist).^2) * (wlist.*sin(tlist)) * 2*pi);
+
+%%
+% * Legendre polynomials with negative $m$ are defined as (see e.g., Wang's book and Lin's Note)
+%
+% $$ P_n^{-\vert m\vert} (x)= (-1)^m \frac{(n-\vert m)!}{(n+\vert m)!} P_n^{\vert m \vert}(x) $$
+%
+% However, Matlab(R) and OTT do not export Legendre polynomials with $m<0$ directly
+% (only $m=0\dots n$ are exported). Legendre polynomials with negative $m$
+% are used when computing Spherical harmonic functions $Y_{n,m}(\theta,
+% \phi)$ in OTT.
+
+%% Spherical Harmonic Functions
+% Spherical harmonic functions $Y_{n, m}(\theta, \phi)$ are defined as (Wang's book and Mathematica(R))
+%
+% $$Y_{n,m}(\theta, \phi)=\sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}}
+% P_n^m(\cos\theta) e^{i m \phi}=\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}P_n^m(\cos\theta) e^{i m \phi}, $$
+%
+% where 
+%
+% $$ \gamma_{n,m}=\frac{(2n+1)(n-m)!}{n(n+1)(n+m)!}.$$
+%
+% Matlab does not provide a direct implementation of sphercial harmonic
+% functions, while Mathematica(R) and OTT do
+
+n=5; m=3;
+disp(ott13.spharm(n, m, pi/3, pi/5));
+disp(ott13.spharm(n, -m, pi/3, pi/5));
+n=5; m=2;
+disp(ott13.spharm(n, m, pi/3, pi/5));
+disp(ott13.spharm(n, -m, pi/3, pi/5));
+
+%%
+% We checked that, OTT result differs to the Mathematica result by a
+% factor of $(-1)^m$ due to the different sign convention of Legendre
+% polynomials. We denote Spherical harmonics of OTT by
+%
+% $$ \tilde{Y}_{n,m }(\theta,\phi)= \hat{P}_n^m(\cos\theta) e^{i m \phi}=\sqrt{\frac{2n+1}{4\pi}\frac{(n-m)!}{(n+m)!}}
+% \tilde{P}_n^m(\cos\theta) e^{i m \phi}=\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\tilde{P}_n^m(\cos\theta) e^{i m \phi}. $$
+%
+% In both Mathematica(R) and OTT implementations, the Spherical harmonics
+% are normalized to unity (see Wang's book), i.e.,
+%
+% $$ \int_0^{\pi}d\theta\int_0^{2\pi}d\phi \sin\theta Y_{n, m}(\theta, \phi)Y_{n',
+% m'}^{*}(\theta, \phi) = \delta_{n, n'}\delta_{m, m'}, $$
+%
+% and the following relation is satisfied (see Wang's book)
+%
+% $$ Y_{n,-m}(\theta, \phi)= (-1)^m Y_{n, m}^{*}(\theta, \phi). $$
+%
+%% Spherical Bessel and Spherical Hankel Functions
+% Spherical Bessel and Spherical Hankel functions are used to describe the
+% wave propagation in the radial direction.
+%
+% * Spherical Bessel function of the first kind $j_n(r)$ and second kind $y_n(r)$ 
+% are indeed the corresponding Bessel function $J_n(r)$ and $Y_n(r)$ of half-integer order
+%
+% $$ j_n(r)= \sqrt{\frac{\pi}{2r}}J_{n+1/2}(r). $$
+%
+% $$ y_n(r)= \sqrt{\frac{\pi}{2r}}Y_{n+1/2}(r). $$
+%
+% $j_n(r)$ has fintite value at $r=0$, while $y_n(r)$ diverges at $r=0$. 
+%
+% Matlab(R) does not provide a direct implementation of $j_n(r)$. OTT and
+% Mathematica(R) have identical implementations.
+%
+plot(0:0.1:10, [ott13.sbesselj(0, 0:0.1:10)'; ...
+                ott13.sbesselj(1, 0:0.1:10)'; ...
+                ott13.sbesselj(2, 0:0.1:10)']);
+%%
+% * Spherical Hankel functions of the first kind $h^{(1)}_n(r)$ and the second kind $h^{(2)}_n(r)$ are 
+% half-integer order Hankel functions $H^{(1)}_n(r)$ and $H^{(2)}_n(r)$.
+% 
+% $$ h^{(1,2)}(r) = \sqrt{\frac{\pi}{2r}} H^{(1,2)}(r) = j_n(r) \pm i
+% y_n(r). $$
+%
+% Matlab(R) does not provide a direct implementation of $h^{(1,2)}_n(x)$. OTT and
+% Mathematica(R) have identical implementations.
+%
+%% Vector Spherical Wavefunctions
+% With Spherical harmonic function $Y_{n,m}(\theta,\phi)$, spherical Bessel
+% functions $j_n(r)$ and spherical Hankel functions $h_n^{(1,2)}(r)$, we
+% can further define vector spherical wavefunctions 
+% $\mathbf{M}^{(q)}_{n,m}(kr, \theta, \phi)$ and 
+% $\mathbf{N}^{(q)}_{n,m}(kr, \theta, \phi)$.
+%
+% * *Vector Spherical Harmonics*
+%
+% Before VSWFs, we first define vector spherical harmonics (VSHs)
+% $\mathbf{B}(\theta, \phi)$, $\mathbf{C}(\theta, \phi)$, and
+% $\mathbf{P}(\theta, \phi)$. Here, we adopt the definition in the OTT
+% documentation, but with a typo corrected in $\mathbf{B}_{n,m}$.
+%
+% $$ \mathbf{B}_{n,m}(\theta, \phi)=r\nabla Y_{n, m}(\theta, \phi) =
+% \hat{\mathbf{r}}\times \mathbf{C}_{n,m}(\theta,\phi)
+% =\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\left[\tau_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}+i\pi_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}, $$
+%
+% $$ \mathbf{C}_{n,m}(\theta, \phi)=\nabla\times(\mathbf{r}Y_{n, m}(\theta, \phi)) =
+% \mathbf{B}_{n,m}(\theta,\phi) \times  \hat{\mathbf{r}}
+% =\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\left[i\pi_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}-\tau_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}, $$
+%
+% $$ \mathbf{P}_{n,m}(\theta, \phi)=\hat{\mathbf{e}}_r Y_{n, m}(\theta,
+% \phi)=\hat{\mathbf{e}}_r\sqrt{\frac{n(n+1)\gamma_{n,m}}{4\pi}}\tilde{P}_n^m(\cos\theta) e^{i m \phi},$$
+%
+% where $\pi_{n, m}(\theta)$ and $\tau_{n, m}(\theta)$ are
+%
+% $$ \pi_{n, m}(\theta)=\frac{m}{\sin\theta}\tilde{P}_n^m(\theta), $$
+%
+% $$ \tau_{n, m}(\theta)=\frac{d}{d\theta}\tilde{P}_n^m(\theta). $$
+%
+% Because of the following facts (see Lin's Note)
+%
+% $$ \int_{0}^{\pi} (\pi_{n,m}\pi_{n',m}+\tau_{n,m}\tau_{n',m})\sin\theta
+% d\theta=\frac{2n(n+1)}{2n+1}\frac{(n+m)!}{(n-m)!}\delta_{n,n'}=\frac{2}{\gamma_{n,m}^2}\delta_{n,n'}, $$
+%
+% $$ \int_{0}^{\pi} (\pi_{n,m}\tau_{n',m}+\pi_{n,m}\tau_{n',m})\sin\theta
+% d\theta=0, $$
+%
+% The VSHs $\mathbf{B}_{n,m}(\theta,\phi)$, $\mathbf{C}_{n,m}(\theta,\phi)$ and $\mathbf{P}_{n,m}(\theta,\phi)$ are orthorganal and are normalized as
+%
+% $$ \int_{0}^{\pi}  d\theta\int_0^{2\pi} d\phi
+% \left( \sin\theta \mathbf{B}_{n,m}^{*}(\theta,\phi)\cdot\mathbf{B}_{n,m}(\theta,\phi)\right)=\int_{0}^{\pi}  d\theta\int_0^{2\pi} d\phi
+% \left( \sin\theta \mathbf{C}_{n,m}^{*}(\theta,\phi)\cdot\mathbf{C}_{n,m}(\theta,\phi)\right) =\frac{n(n+1)}{2\pi}. $$
+%
+% $$ \int_{0}^{\pi}  d\theta\int_0^{2\pi} d\phi \left( \sin\theta
+% \mathbf{P}_{n,m}^{*}(\theta,\phi)\cdot\mathbf{P}_{n,m}(\theta,\phi)\right)=\int_{0}^{\pi}
+% d\theta\int_0^{2\pi} d\phi
+% \left(\sin\theta Y_{n,m}^{*}(\theta,\phi)Y_{n,m}(\theta,\phi)\right)=1. $$
+%
+% * *Vector Spherical Wavefunctions*
+%
+% In OTT, the electromagnetic fields are expanded using VSWFs as
+%
+% $$ \mathbf{E}(\mathbf{r})=\vert E_0\vert \sum_{n=1}^{\infty}\sum_{m=-n}^{n} p_{n,m}
+% \mathbf{N}^{(q)}_{n,m}(\mathbf{r})+q_{n,m} \mathbf{M}^{(q)}_{n,m}(\mathbf{r}),$$
+%
+% where the VSWFs in OTT are defined as follows 
+%
+% $$ \mathbf{M}^{(q)}_{n,m} (\mathbf{r})=
+% N_n z^{(q)}_n(kr)\mathbf{C}_{m,n}(\theta,\phi)
+% =\sqrt{\frac{\gamma_{n,m}}{4\pi}}\left\{ z^{(q)}_n(kr)\left[i\pi_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}-\tau_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}\right\}, $$
+%
+% $$ \mathbf{N}^{(q)}_{n,m} (\mathbf{r})=
+% \frac{z^{(q)}_n(kr)}{N_n kr}\mathbf{P}_{n,m}(\theta,\phi) +
+% N_n\frac{(kr z^{(q)}_n(kr))'}{kr}\mathbf{B}_{m,n}(\theta,\phi)
+% =\sqrt{\frac{\gamma_{n,m}}{4\pi}} \left\{n(n+1)\frac{z^{(q)}_n(kr)}{kr} \tilde{P}_n^m(\cos\theta)
+% e^{i m \phi}\hat{\mathbf{e}}_r \right\}
+% +\sqrt{\frac{\gamma_{n,m}}{4\pi}}\left\{\frac{(kr z^{(q)}_n(kr))'}{kr}\left[\tau_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}+i\pi_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}\right\}, $$
+%
+% where $z_n^{(q)}(kr)=j_n(kr), y_n(kr), h^{(1)}_n(kr)$, or $h^{(2)}_n(kr)$ for $q=1,2, 3$ or $4$, the factor $N_n=[n(n+1)]^{-1/2}$, and 
+%
+% $$ \frac{(kr z^{(q)}_n(kr))'}{kr} = z^{(q)}_{n-1}(kr) - \frac{nz^{(q)}_n(kr)}{kr}.$$
+%
+% Professor Lin's note does not explicitely define the VSHs $\mathbf{B}_{n,m}$, $\mathbf{C}_{n,m}$, and $\mathbf{P}_{n,m}$. 
+% The VSWFs in Prof. Lin's note were defined by the factor in the brace
+% braket $\{\cdot\}$, i.e.,
+%
+% $$ \tilde{\mathbf{M}}^{(q)}_{n,m} (\mathbf{r})=  
+% z^{(q)}_n(kr)\left[i\pi_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}-\tau_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}
+% = \sqrt{\frac{4\pi}{\gamma_{n,m}}}\mathbf{M}^{(q)}_{n,m} (\mathbf{r}), $$
+%
+% $$ \tilde{\mathbf{N}}^{(q)}_{n,m} (\mathbf{r})= n(n+1)\frac{z^{(q)}_n(kr)}{kr} \tilde{P}_n^m(\cos\theta) e^{i m \phi}\hat{\mathbf{e}}_r  
+% + \frac{(kr z^{(q)}_n(kr))'}{kr}\left[\tau_{n,m}(\theta) \hat{\mathbf{e}}_{\theta}+i\pi_{n,m}(\theta)\hat{\mathbf{e}}_{\phi}\right]e^{im\phi}
+% = \sqrt{\frac{4\pi}{\gamma_{n,m}}}\mathbf{N}^{(q)}_{n,m} (\mathbf{r}), $$
+%
+% Furthremore, In the field expansions, Prof. Lin's note explicitely
+% includes a factor $\sqrt{\gamma_{n,m}}$, i.e.,
+%
+% $$ \mathbf{E}(\mathbf{r})=-\sum_{n=1}^{\infty}\sum_{m=-n}^{n} iE_{n,m}\left[\tilde{p}_{n,m}
+% \tilde{\mathbf{N}}^{(q)}_{n,m}(\mathbf{r})+\tilde{q}_{n,m} \tilde{\mathbf{M}}^{(q)}_{n,m}(\mathbf{r})\right] 
+% = \vert E_0\vert \sum_{n=1}^{\infty}\sum_{m=-n}^{n} i^{n-1}\sqrt{4\pi}
+% \left[ \tilde{p}_{n,m}\mathbf{N}^{(q)}_{n,m} (\mathbf{r}) + \tilde{q}_{n,m}\mathbf{M}^{(q)}_{n,m} (\mathbf{r})\right],$$
+%
+% where $E_{n,m}=\vert E_0\vert i^n \sqrt{\gamma_{n,m}}$.
+%
+% In _qlib_, we adopt the field expansion formulas in Professor Lin's note
+% to calculate the expansion coefficients $\tilde{p}_{n,m}$, and
+% $\tilde{q}_{n,m}$. When reproducing the fields by summing up, we use the
+% OTT implementation of VSWFs $\mathbf{M}^{(q)}_{n,m} (\mathbf{r})$ and $\mathbf{N}^{(q)}_{n,m} (\mathbf{r})$.
+% According to the derivation above, an extra factor of
+% $i^{n-1}\sqrt{4\pi}$ should be included in the code.
+%
+% Now, we discuss the expansion of magnetic field $\mathbf{H}(\mathbf{r})$.
+% For a time-harmonics wave in a linear, isotropic and homogeneous medium,
+% the magnetic field relates to the electric field by [see ]
+%
+% $$\mathbf{H}(\mathbf{r})= \frac{\nabla \times
+% \mathbf{E}(\mathbf{r})}{i\omega \mu}.$$
+%
+% Using the relations between $\mathbf{M}_{n,m}(\mathbf{r})$ and
+% $\mathbf{N}_{n,m}(\mathbf{r})$ [see]
+%
+% $$\nabla \times \mathbf{M}_{n,m}(\mathbf{r})=k\mathbf{N}_{n,m}(\mathbf{r})$$
+%
+% $$\nabla \times \mathbf{N}_{n,m}(\mathbf{r})=k\mathbf{M}_{n,m}(\mathbf{r})$$
+%
+% and $k/(\omega\mu) = n/(c\mu) = \sqrt{\epsilon/\mu}=1/Z$ ($c$ is the vacumme light velocity, 
+% $n$ is the refractive index, and $Z=\sqrt{\mu/\epsilon}$ is the wave impedance) one have
+%
+% $$ \mathbf{H}(\mathbf{r})
+% = \frac{k \vert E_0\vert}{i\omega\mu} \sum_{n=1}^{\infty}\sum_{m=-n}^{n} i^{n-1}\sqrt{4\pi}
+% \left[ \tilde{p}_{n,m}\mathbf{M}^{(q)}_{n,m} (\mathbf{r}) + \tilde{q}_{n,m}\mathbf{N}^{(q)}_{n,m} (\mathbf{r})\right]
+% = \frac{\vert E_0\vert}{iZ} \sum_{n=1}^{\infty}\sum_{m=-n}^{n} i^{n-1}\sqrt{4\pi}
+% \left[ \tilde{p}_{n,m}\mathbf{M}^{(q)}_{n,m} (\mathbf{r}) + \tilde{q}_{n,m}\mathbf{N}^{(q)}_{n,m} (\mathbf{r})\right],$$
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
